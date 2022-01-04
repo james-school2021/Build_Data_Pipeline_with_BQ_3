@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `bg-pipeline-project-337007.source.payment_aggregates`
+(
+     payment_date   DATE
+    ,user_id        INT64
+    ,transactions   INT64
+    ,total_spend_usd FLOAT64
+)
+PARTITION BY payment_date
+CLUSTER BY user_id
+;
+
+INSERT `bg-pipeline-project-337007.source.payment_aggregates`
+
+select 
+    payment_date
+    ,user_id
+    ,count(transaction_id) as transactions
+    ,sum(total_cost_usd)   as total_spend_usd
+from `bg-pipeline-project-337007.source.payment_history`
+group by 1,2
+order by payment_date
+;

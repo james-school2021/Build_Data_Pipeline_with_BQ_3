@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `bg-pipeline-project-337007.source.revenue_daily`
+(
+     payment_date   DATE
+    ,transactions   INT64
+    ,gross_revenue_usd FLOAT64
+)
+PARTITION BY payment_date
+
+;
+
+INSERT `bg-pipeline-project-337007.source.revenue_daily`
+
+select 
+    payment_date
+    ,count(transaction_id) as transactions
+    ,sum(total_cost_usd)   as gross_revenue_usd
+from `bg-pipeline-project-337007.source.payment_history`
+group by 1
+order by payment_date
+;

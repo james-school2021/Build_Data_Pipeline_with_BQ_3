@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS `bg-pipeline-project-337007.source.payment_history`
+(
+     payment_date   DATE
+    ,payment_month  STRING
+    ,user_id        INT64
+    ,transaction_id INT64
+    ,product_id     INT64
+    ,total_cost     FLOAT64
+    ,total_cost_usd FLOAT64
+    ,fx_rate        FLOAT64
+    ,fx_rate_dt     DATE    
+)
+PARTITION BY payment_date
+CLUSTER BY user_id

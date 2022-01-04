@@ -1,0 +1,6 @@
+CREATE MATERIALIZED VIEW  `bg-pipeline-project-337007.source.top_spenders`
+AS SELECT user_id, sum(total_cost_usd)   as total_spend_usd
+FROM  `bg-pipeline-project-337007.source.payment_history`
+WHERE payment_date = DATE_SUB(DATE "2008-12-25", INTERVAL 1 DAY)
+GROUP BY 1
+;
